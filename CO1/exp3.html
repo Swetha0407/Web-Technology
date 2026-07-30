@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Timetable</title>
+    <style>
+         body{
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        table{
+            background-color: white;
+        }
+        caption{
+            font-size: 28px;
+            font-weight: bold;
+            color: darkblue;
+            margin-bottom: 10px;
+        }
+        th{
+            background-color: #4682B4;
+            color: white;
+        }
+        td{
+            background-color: #EAF4FC;
+        }
+        th, td{
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+<table border="2" cellpadding="10" cellspacing="2" align="center">
+    <caption><b>Class Timetable</b></caption>
+    <tr>
+        <th>Day</th>
+        <th>9:00 - 10:00</th>
+        <th>10:00 - 11:00</th>
+        <th>11:00 - 12:00</th>
+        <th>12:00 - 1:00</th>
+        <th>1:00 - 2:00</th>
+        <th>2:00 - 3:00</th>
+    </tr>
+    <tr>
+        <th>Monday</th>
+        <td>Math</td>
+        <td>English</td>
+        <td>Science</td>
+        <td rowspan="5" align="center"><b>LUNCH</b></td>
+        <td>Computer</td>
+        <td>Physics</td>
+    </tr>
+    <tr>
+        <th>Tuesday</th>
+        <td>English</td>
+        <td>Math</td>
+        <td>Computer</td>
+        <td colspan="2" align="center">Lab</td>
+    </tr>
+    <tr>
+        <th>Wednesday</th>
+        <td>Physics</td>
+        <td>Science</td>
+        <td>Math</td>
+        <td>English</td>
+        <td>Computer</td>
+    </tr>
+    <tr>
+        <th>Thursday</th>
+        <td>Computer</td>
+        <td>Physics</td>
+        <td>English</td>
+        <td>Science</td>
+        <td>Math</td>
+    </tr>
+    <tr>
+        <th>Friday</th>
+        <td colspan="2" align="center">Seminar</td>
+        <td>Math</td>
+        <td>Physics</td>
+        <td>Sports</td>
+    </tr>
+</table>
+</body>
+</html>

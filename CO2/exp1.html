@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Registration</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+}
+.container{
+    width:420px;
+    margin:40px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px lightgray;
+}
+h2{
+    text-align:center;
+    color:#1b4f72;
+}
+label{
+    font-weight:bold;
+}
+input,select{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    margin-bottom:15px;
+    border:1px solid gray;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+.gender{
+    width:auto;
+}
+input[type=submit]{
+    background:#1b4f72;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+input[type=submit]:hover{
+    background:#154360;
+}
+#message{
+    color:green;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:10px;
+}
+#welcome{
+    color:#1b4f72;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:15px;
+}
+.error{
+    color:red;
+    font-size:14px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Student Registration Form</h2>
+<p id="welcome"></p>
+<p id="message"></p>
+<form id="regForm">
+<label>Name</label>
+<input type="text" id="name" name="name" required>
+<label>Roll Number</label>
+<input type="text" name="roll" required>
+<label>Department</label>
+<select name="department">
+<option>Information Technology</option>
+<option>Computer Science</option>
+<option>Artificial Intelligence</option>
+<option>Electronics</option>
+</select>
+<label>Gender</label><br>
+<input class="gender" type="radio" name="gender" value="Male" required> Male
+<input class="gender" type="radio" name="gender" value="Female"> Female
+<br><br>
+<label>Year</label>
+<select name="year">
+<option>I Year</option>
+<option>II Year</option>
+<option>III Year</option>
+<option>IV Year</option>
+</select>
+<label>Email</label>
+<input type="email" name="email" required>
+<label>Phone Number</label>
+<input type="text" id="phone" name="phone">
+<span class="error" id="phoneError"></span>
+<input type="submit" value="Register">
+</form>
+</div>
+<script>
+document.getElementById("name").addEventListener("keyup", function(){
+    document.getElementById("welcome").innerHTML =
+    "Welcome, " + this.value + "!";
+});
+document.getElementById("regForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    let phone=document.getElementById("phone").value;
+    if(phone.length!=10 || isNaN(phone))
+    {
+        document.getElementById("phoneError").innerHTML=
+        "Enter a valid 10-digit phone number.";
+        return;
+    }
+    document.getElementById("phoneError").innerHTML="";
+    let confirmRegister=confirm("Do you want to submit the registration?");
+    if(confirmRegister)
+    {
+        document.getElementById("message").innerHTML=
+        "🎉 Student Registered Successfully!";
+        alert("Registration Successful!");
+        document.getElementById("regForm").reset();
+        document.getElementById("welcome").innerHTML="";
+    }
+
+});
+</script>
+</body>
+</html>

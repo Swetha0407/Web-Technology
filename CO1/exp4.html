@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Form</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 30px;
+        }
+        h1{
+            text-align: center;
+        }
+        form{
+            background-color: white;
+            width: 500px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        label{
+            display: inline-block;
+            width: 140px;
+            margin-top: 12px;
+        }
+        input, select, textarea{
+            margin-top: 10px;
+            padding: 8px;
+            width: 250px;
+        }
+        textarea{
+            height: 80px;
+        }
+        .radio, .check{
+            width: auto;
+        }
+        .buttons{
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons input{
+            width: 120px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Student Registration Form</h1>
+<form>
+    <label>Student Name</label>
+    <input type="text" placeholder="Enter your name"><br>
+    <label>Password</label>
+    <input type="password" placeholder="Enter password"><br>
+    <label>Email</label>
+    <input type="email" placeholder="Enter email"><br>
+    <label>Gender</label>
+    <input class="radio" type="radio" name="gender"> Male
+    <input class="radio" type="radio" name="gender"> Female
+    <br>
+    <label>Skills</label>
+    <input class="check" type="checkbox"> C
+    <input class="check" type="checkbox"> C++
+    <input class="check" type="checkbox"> Python
+    <br>
+    <label>Department</label>
+    <select>
+        <option>Select Department</option>
+        <option>Information Technology</option>
+        <option>Computer Science</option>
+        <option>Artificial Intelligence</option>
+        <option>Electronics</option>
+    </select>
+    <br>
+    <label>Address</label>
+    <textarea placeholder="Enter your address"></textarea>
+    <br>
+    <div class="buttons">
+        <input type="submit" value="Register">
+        <input type="reset" value="Reset">
+    </div>
+</form>
+</body>
+</html>
