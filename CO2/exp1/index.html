@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | Swetha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #26344a;
+            --ink-soft: #56677f;
+            --paper: #fffdf8;
+            --board: #f2ede2;
+            --accent: #5cb3e0;
+            --accent-dark: #2f8cbf;
+            --yellow: #ffe066;
+            --pink: #ffb3c6;
+            --mint: #a3f7bf;
+            --green: #8ce99a;
+            --sky: #a3d5ff;
+            --lavender: #d5c6f0;
+            --track: #e4ddcd;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--board);
+            background-image: radial-gradient(circle at 1px 1px, rgba(38,52,74,0.07) 1px, transparent 0);
+            background-size: 22px 22px;
+            color: var(--ink);
+            line-height: 1.65;
+            padding: 24px 12px;
+        }
+        .page-wrapper {
+            max-width: 980px;
+            margin: 0 auto;
+            background-color: var(--paper);
+            border: 3px solid var(--ink);
+            border-radius: 18px;
+            box-shadow: 8px 8px 0 var(--ink);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, var(--sky) 0%, var(--lavender) 100%);
+            padding: 46px 40px 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid var(--ink);
+        }
+        .photo-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .photo-wrap::before {
+            content: "";
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-6deg);
+            width: 60px;
+            height: 24px;
+            background: rgba(255, 224, 102, 0.85);
+            border: 1px solid rgba(38,52,74,0.3);
+            z-index: 2;
+        }
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--paper);
+            outline: 3px solid var(--ink);
+            display: block;
+            box-shadow: 0 6px 14px rgba(38,52,74,0.25);
+        }
+        .header-text .eyebrow {
+            display: inline-block;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            background-color: var(--paper);
+            border: 2px solid var(--ink);
+            padding: 3px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        header h1 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+        header p.tagline {
+            color: var(--ink-soft);
+            font-size: 15px;
+            font-weight: 500;
+        }
+        main {
+            padding: 44px 40px 50px;
+        }
+        section {
+            margin-bottom: 48px;
+        }
+        section:last-child {
+            margin-bottom: 0;
+        }
+        h2 {
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 25px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 20px;
+            display: inline-block;
+            padding-bottom: 6px;
+            border-bottom: 3px solid var(--accent);
+        }
+        .intro p {
+            font-size: 16px;
+            max-width: 700px;
+            color: var(--ink);
+        }
+        .sticky-board {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            padding: 10px 4px 4px;
+            list-style: none;
+        }
+        .sticky {
+            width: 150px;
+            min-height: 110px;
+            padding: 16px 14px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--ink);
+            border: 2px solid var(--ink);
+            border-radius: 3px;
+            box-shadow: 4px 5px 0 rgba(38,52,74,0.25);
+            display: flex;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.15s ease;
+        }
+        .sticky:nth-child(1) { background-color: var(--yellow); transform: rotate(-4deg); }
+        .sticky:nth-child(2) { background-color: var(--pink);   transform: rotate(3deg); }
+        .sticky:nth-child(3) { background-color: var(--mint);   transform: rotate(-2deg); }
+        .sticky:nth-child(4) { background-color: var(--sky);    transform: rotate(4deg); }
+        .sticky:nth-child(5) { background-color: var(--lavender); transform: rotate(-3deg); }
+        .sticky:hover { transform: translateY(-4px) scale(1.05) rotate(0deg); }
+        .goals-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            counter-reset: goal;
+            max-width: 700px;
+        }
+        .goals-list li {
+            position: relative;
+            padding-left: 40px;
+            font-size: 15.5px;
+            font-weight: 500;
+        }
+        .goals-list li::before {
+            content: counter(goal);
+            counter-increment: goal;
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent);
+            border: 2px solid var(--ink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--paper);
+        }
+        .table-scroll {
+            overflow-x: auto;
+            border: 2px solid var(--ink);
+            border-radius: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14.5px;
+            min-width: 480px;
+        }
+        thead tr {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+        th, td {
+            text-align: left;
+            padding: 12px 16px;
+            font-family: 'Inter', sans-serif;
+        }
+        th {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        tbody tr {
+            border-top: 1px solid var(--track);
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #fbf7ee;
+        }
+        tbody tr:hover {
+            background-color: var(--sky);
+        }
+        .status-pill {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            border: 1.5px solid var(--ink);
+            font-family: 'Baloo 2', sans-serif;
+        }
+        .status-pill.pass { background-color: var(--green); }
+        .progress-row {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        .progress-ring {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 2px solid var(--ink);
+            background: conic-gradient(var(--accent) 0deg 168.75deg, var(--track) 168.75deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .progress-ring-inner {
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            background-color: var(--paper);
+            border: 2px solid var(--ink);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .progress-ring-inner .fraction {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--ink);
+            line-height: 1;
+        }
+        .progress-ring-inner .caption {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--ink-soft);
+            margin-top: 4px;
+        }
+        .progress-details p {
+            font-size: 15px;
+            max-width: 420px;
+            margin-bottom: 6px;
+        }
+        .progress-details .percent {
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 700;
+            color: var(--accent-dark);
+        }
+        .college-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            padding: 13px 28px;
+            background-color: var(--accent);
+            color: var(--paper);
+            text-decoration: none;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid var(--ink);
+            border-radius: 30px;
+            box-shadow: 3px 4px 0 var(--ink);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .college-link:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 2px 0 var(--ink);
+            background-color: var(--accent-dark);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .contact-card {
+            background-color: var(--board);
+            border: 2px solid var(--ink);
+            border-radius: 12px;
+            padding: 14px 18px;
+        }
+        .contact-card span.label {
+            display: block;
+            font-family: 'Baloo 2', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ink-soft);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        .contact-card span.value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        footer {
+            text-align: center;
+            padding: 22px;
+            font-family: 'Baloo 2', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--ink-soft);
+            border-top: 3px solid var(--ink);
+            background-color: var(--board);
+        }
+        @media (max-width: 640px) {
+            body {
+                padding: 12px 6px;
+            }
+            .page-wrapper {
+                border-radius: 12px;
+                box-shadow: 5px 5px 0 var(--ink);
+            }
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 22px 32px;
+            }
+            header h1 {
+                font-size: 34px;
+            }
+            main {
+                padding: 34px 20px 40px;
+            }
+            .sticky-board {
+                justify-content: center;
+            }
+            .progress-row {
+                justify-content: center;
+                text-align: center;
+            }
+            .progress-details p {
+                max-width: 100%;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header>
+            <div class="photo-wrap">
+                <img
+                    class="profile-photo"
+                    src="Swetha_passportsize_photo.JPG"
+                    alt="Photograph of Swetha">
+            </div>
+            <div class="header-text">
+                <span class="eyebrow">Student Profile</span>
+                <h1>Swetha</h1>
+                <p class="tagline">B.Tech, Information Technology &middot; SIMATS Engineering College</p>
+            </div>
+        </header>
+        <main>
+            <section class="intro">
+                <h2>About Me</h2>
+                <p>
+                    Hello, I'm Swetha S, a Second Year B.Tech student specializing in Information Technology at SIMATS Engineering with a curious mind and a passion for learning.
+                    I enjoy exploring programming and web development, taking on new challenges, and turning ideas into practical projects. 
+                    I believe that consistency, creativity, and continous learning are key to growth.
+                    My goal is to become a skilled software engineer who creates meaningful and impactful solutions.
+                </p>
+            </section>
+            <section class="hobbies-section">
+                <h2>Hobbies</h2>
+                <ul class="sticky-board">
+                    <li class="sticky">Coding side projects</li>
+                    <li class="sticky">Reading novels and news</li>
+                    <li class="sticky">Solving logical puzzles</li>
+                    <li class="sticky">Watching movies and series</li>
+                    <li class="sticky">Playing badminton</li>
+                </ul>
+            </section>
+            <section class="goals-section">
+                <h2>Academic Goals</h2>
+                <ol class="goals-list">
+                    <li>Graduate with a strong academic record in Information Technology</li>
+                    <li>Build a solid portfolio of full-stack projects</li>
+                    <li>Gain hands-on experience through internships in software development</li>
+                    <li>Master Data Structures and Algorithms to strengthen my problem-solving skills and prepare for technical interviews</li>
+                    <li>Secure a placement in a reputed technology organization</li>
+                    <li> Continue exploring emerging technologies and their applications</li>
+                </ol>
+            </section>
+            <section class="marks-section">
+                <h2>Academic Performance</h2>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
+                                <th>Grade</th>
+                                <th>Status</th>
+                                <th>Month & Year</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>CSA03</td><td>Data Structures</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>June 2026</td></tr>
+                            <tr><td>2</td><td>UBA10</td><td>Numerical Methods</td><td>A</td><td><span class="status-pill pass">Pass</span></td><td>June 2026</td></tr>
+                            <tr><td>3</td><td>DSA01</td><td>Object Oriented Programming using C++</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>June 2026</td></tr>
+                            <tr><td>4</td><td>CSA05</td><td>Database Management Systems</td><td>A</td><td><span class="status-pill pass">Pass</span></td><td>April 2026</td></tr>
+                            <tr><td>5</td><td>BTA01</td><td>Biology and Environmental Science for Engineers</td><td>A</td><td><span class="status-pill pass">Pass</span></td><td>February 2026</td></tr>
+                            <tr><td>6</td><td>CSA02</td><td>C Programming</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>January 2026</td></tr>
+                            <tr><td>7</td><td>UBA06</td><td>Applied Mathematics</td><td>A</td><td><span class="status-pill pass">Pass</span></td><td>December 2025</td></tr>
+                            <tr><td>8</td><td>ECA47</td><td>Principles of Digital System and Design</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>December 2025</td></tr>
+                            <tr><td>9</td><td>UBA28</td><td>Professional Ethics and Legal Practices</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>November 2025</td></tr>
+                            <tr><td>10</td><td>CSA08</td><td>Python Programming</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>October 2025</td></tr>
+                            <tr><td>11</td><td>UBA04</td><td>Discrete Mathematics</td><td>A</td><td><span class="status-pill pass">Pass</span></td><td>September 2025</td></tr>
+                            <tr><td>12</td><td>UBA01</td><td>Engineering Mathematics - I</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>September 2025</td></tr>
+                            <tr><td>13</td><td>UBA48</td><td>Engineering Physics</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>August 2025</td></tr>
+                            <tr><td>14</td><td>UBA49</td><td>Engineering Chemistry</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>July 2025</td></tr>
+                            <tr><td>15</td><td>UBA30</td><td>Aptitude and Competency Skills</td><td>S</td><td><span class="status-pill pass">Pass</span></td><td>July 2025</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section class="progress-section">
+                <h2>Course Progress</h2>
+                <div class="progress-row">
+                    <div class="progress-ring">
+                        <div class="progress-ring-inner">
+                            <span class="fraction">15/32</span>
+                            <span class="caption">Courses</span>
+                        </div>
+                    </div>
+                    <div class="progress-details">
+                        <p><span class="percent">47% complete</span> &mdash; steadily working through the core curriculum.</p>
+                        <p>17 courses remaining before graduation requirements are met.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="college-section">
+                <h2>College</h2>
+                <p style="margin-bottom: 14px;">SIMATS Engineering College &mdash; official website:</p>
+                <a class="college-link" href="https://www.saveetha.com/" target="_blank" rel="noopener noreferrer">
+                    Visit College Website &rarr;
+                </a>
+            </section>
+            <section class="contact-section">
+                <h2>Contact Details</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <span class="label">Email</span>
+                        <span class="value">192521076.simats@saveetha.com</span>
+                    </div>
+                    <div class="contact-card">
+                        <span class="label">Phone</span>
+                        <span class="value">73058 93278</span>
+                    </div>
+                    <div class="contact-card">
+                        <span class="label">Department</span>
+                        <span class="value">Information Technology</span>
+                    </div>
+                    <div class="contact-card">
+                        <span class="label">College</span>
+                        <span class="value">SIMATS Engineering</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            &copy; 2026 Swetha &middot; Student Profile Page
+        </footer>
+    </div>
+</body>
+</html>
