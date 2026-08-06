@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Event Registration Portal</title>
+
+    <!-- ========== EXTERNAL CSS ========== -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ========== INTERNAL CSS ========== -->
+    <!-- Demonstrating internal CSS: applied specifically to the hero section -->
+    <style>
+        .hero p {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #e0e7ff;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+        .hero .registration-period {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #c7d2fe;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
+        <div class="header-wrapper">
+            <div class="brand">
+                <h1 class="uni-name">ABC University</h1>
+                <span class="portal-tag">Event Registration Portal</span>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#register">Register</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="home">
+        <img src="images/hero.jpg" alt="University campus aerial view" class="hero-bg">
+        <div class="hero-overlay">
+            <h1>Register Now for Campus Events 2026</h1>
+            <p>Join workshops, hackathons, cultural festivals, and placement training programmes</p>
+            <p class="registration-period">Registration Period: 1st January – 31st March 2026</p>
+            <a href="#register" class="cta-btn">Register Now</a>
+        </div>
+    </section>
+
+    <!-- ========== EVENT CATALOGUE ========== -->
+    <section class="events-section" id="events">
+        <h2>Upcoming Events</h2>
+        <p class="sub-title">Explore and register for exciting events across all categories</p>
+
+        <div class="card-container">
+
+            <!-- ===== Card 1: Technical Workshop ===== -->
+            <div class="card" id="card-tech">
+                <div class="status-badge open">Open</div>
+                <img src="images/tech.jpg" alt="Technical Workshop" class="card-img">
+                <div class="card-body">
+                    <h3>Technical Workshop</h3>
+                    <p class="category">Category: Technical</p>
+                    <p class="date">📅 15th February 2026, 9:00 AM – 6:00 PM</p>
+                    <p class="venue">📍 Innovation Lab, Block C</p>
+                    <p class="desc">A 48-hour coding marathon where students build innovative solutions for real-world problems. Teams of 3-4 members compete for exciting prizes.</p>
+                    <div class="card-footer">
+                        <span class="status-text open">● Open for Registration</span>
+                        <a href="#register" class="reg-btn">Register</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Card 2: Cultural Fest ===== -->
+            <div class="card" id="card-cultural">
+                <div class="status-badge open">Open</div>
+                <img src="images/cultural.jpg" alt="Cultural Fest" class="card-img">
+                <div class="card-body">
+                    <h3>Cultural Fest – "Rhythm 2026"</h3>
+                    <p class="category">Category: Cultural</p>
+                    <p class="date">📅 10th March 2026, 2:00 PM – 10:00 PM</p>
+                    <p class="venue">📍 University Auditorium</p>
+                    <p class="desc">Celebrate diversity with music, dance, drama, and art exhibitions. Showcase your talent on the grand stage and win awards across multiple categories.</p>
+                    <div class="card-footer">
+                        <span class="status-text open">● Open for Registration</span>
+                        <a href="#register" class="reg-btn">Register</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Card 3: Placement Training ===== -->
+            <div class="card" id="card-placement">
+                <div class="status-badge limited">Limited</div>
+                <img src="images/placement.jpg" alt="Placement Training" class="card-img">
+                <div class="card-body">
+                    <h3>Placement Training</h3>
+                    <p class="category">Category: Placement</p>
+                    <p class="date">📅 20th February 2026, 10:00 AM – 4:00 PM</p>
+                    <p class="venue">📍 Seminar Hall, Block A</p>
+                    <p class="desc">Expert-led sessions on resume building, interview preparation, aptitude tests, and soft skills development. Industry professionals share insights on landing top jobs.</p>
+                    <div class="card-footer">
+                        <span class="status-text limited">● Limited Seats</span>
+                        <a href="#register" class="reg-btn">Register</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Card 4: Sports Meet ===== -->
+            <div class="card" id="card-sports">
+                <div class="status-badge open">Open</div>
+                <img src="images/sports.jpg" alt="Sports Meet" class="card-img">
+                <div class="card-body">
+                    <h3>Inter-Dept Sports Meet</h3>
+                    <p class="category">Category: Sports</p>
+                    <p class="date">📅 5th March 2026, 7:00 AM – 5:00 PM</p>
+                    <p class="venue">📍 University Sports Ground</p>
+                    <p class="desc">Compete in cricket, basketball, volleyball, athletics, and more. Represent your department and earn glory. Trophies and certificates for winners.</p>
+                    <div class="card-footer">
+                        <span class="status-text open">● Open for Registration</span>
+                        <a href="#register" class="reg-btn">Register</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========== REGISTRATION FORM ========== -->
+    <section class="form-section" id="register">
+        <h2>Event Registration Form</h2>
+        <p class="sub-title">Fill in your details to register for your preferred event</p>
+
+        <form class="reg-form" action="#" method="POST">
+            <div class="form-row">
+                <label for="name">Student Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-row">
+                <label for="regno">Register Number</label>
+                <input type="text" id="regno" name="regno" placeholder="e.g., 21BCS1234" required>
+            </div>
+
+            <div class="form-row">
+                <label for="dept">Department</label>
+                <select id="dept" name="dept" required>
+                    <option value="">-- Select Department --</option>
+                    <option value="cse">Computer Science & Engineering</option>
+                    <option value="ece">Electronics & Communication</option>
+                    <option value="mech">Mechanical Engineering</option>
+                    <option value="civil">Civil Engineering</option>
+                    <option value="it">Information Technology</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="e.g., student@abcuniversity.edu" required>
+            </div>
+
+            <div class="form-row">
+                <label for="event">Select Event</label>
+                <select id="event" name="event" required>
+                    <option value="">-- Select Event --</option>
+                    <option value="tech">Technical Workshop</option>
+                    <option value="cultural">Cultural Fest – Rhythm 2026</option>
+                    <option value="placement">Placement Training</option>
+                    <option value="sports">Inter-Dept Sports Meet</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <!-- ========== INLINE CSS ========== -->
+                <!-- Demonstrating inline CSS on this submit button -->
+                <button type="submit" style="background-color: #1a365d; color: #ffffff; font-weight: bold; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-size: 1rem; width: 100%;">Submit Registration</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Contact Information</h3>
+                <p><strong>ABC University</strong></p>
+                <p>University Road, Chennai – 600001</p>
+                <p>Phone: +91 44 1234 5678</p>
+                <p>Email: events@abcuniversity.edu</p>
+            </div>
+            <div class="footer-col">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#register">Register</a></li>
+                    <li><a href="https://www.abcuniversity.edu" target="_blank">University Website</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ABC University. All Rights Reserved. | Designed for ITA02 – Web Technology</p>
+        </div>
+    </footer>
+
+    <!-- ========== FIXED HELP BUTTON ========== -->
+    <a href="#register" class="help-btn" title="Register Now">?</a>
+
+</body>
+</html>
