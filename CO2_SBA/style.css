@@ -1,617 +1,488 @@
-/*
- * ============================================================
- * style.css – External Style Sheet
- * University Event Registration Portal
- * Course: ITA02 – Web Technology (Unit II)
- * ============================================================
- *
- * This external CSS file controls the entire website design.
- * External CSS is the most suitable method for multi-page websites
- * because:
- *   1. A single file controls all pages — ensuring consistency.
- *   2. Reduces code duplication across pages.
- *   3. Browsers cache the file — faster page loads.
- *   4. Easier to maintain and update styles globally.
- * ============================================================
- */
+/* =====================================================================
+   SIMATS ENGINEERING — EVENT REGISTRATION PORTAL
+   External stylesheet (main site design — Required CSS method #3)
+   Organised by section. Each block is commented for the report.
+   ===================================================================== */
 
+/* ---------------------------------------------------------------------
+   1. RESET & ROOT VARIABLES
+--------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* border-box applied site-wide — see report
+                              for content-box vs border-box calculation */
+}
 
-/* ===== 1. CSS RESET & BASE STYLES ===== */
+:root {
+  --navy: #10182b;
+  --blue-deep: #1b2a4a;
+  --blue-accent: #5cb3e0;   /* soft blue accent */
+  --amber: #ffb648;         /* warm CTA accent */
+  --bg: #f6f8fb;
+  --card-bg: #ffffff;
+  --text-dark: #1b2333;
+  --text-muted: #5c6478;
+  --radius: 14px;
+  --shadow: 0 10px 30px rgba(16, 24, 43, 0.10);
+}
 
-/* Element selector: body */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333333;
-    background-color: #f4f6f9;
-    line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+  background: var(--bg);
+  line-height: 1.55;
+  max-width: 100%;
+  overflow-x: hidden; /* guards against accidental horizontal scroll */
 }
 
-/* Group selector: h1, h2, h3 */
-h1, h2, h3 {
-    margin-top: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+h1, h2, h3, .brand-text strong {
+  font-family: 'Baloo 2', cursive;
 }
 
+/* ---------------------------------------------------------------------
+   2. SELECTOR TYPE DEMONSTRATIONS (for report reference)
+   - Element selector      -> body, h1, footer
+   - Class selector         -> .event-card, .cta-btn
+   - ID selector            -> #register, #events
+   - Group selector         -> h1, h2, h3 (above)
+   - Descendant selector    -> .event-card h3
+   - Child selector         -> .main-nav > ul > li
+   - Attribute selector     -> input[type="email"], a[href^="#"]
+   - Pseudo-class            -> .register-btn:hover, input:focus
+   - Pseudo-element          -> .event-card::before, .cta-btn::after
+--------------------------------------------------------------------- */
 
-/* ===== 2. HEADER & STICKY NAVIGATION ===== */
-
-/* Element selector: header */
-header.site-header {
-    background-color: #1a365d;
-    color: #ffffff;
-    position: sticky;       /* POSITIONING: sticky navbar */
-    top: 0;
-    z-index: 1000;           /* z-index demonstration */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+.event-card h3 {               /* descendant selector */
+  margin-bottom: 10px;
+  font-size: 1.15rem;
+  color: var(--blue-deep);
 }
 
-.header-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.main-nav > ul > li {          /* child selector */
+  list-style: none;
 }
 
-.uni-name {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin: 0;
+input[type="email"],
+input[type="text"] {           /* attribute selector */
+  font-family: inherit;
 }
 
-.portal-tag {
-    font-size: 0.8rem;
-    color: #a0c4e8;
+a[href^="#"] {                 /* attribute selector (starts-with) */
+  scroll-behavior: smooth;
 }
 
-/* Child selector: nav > ul > li */
-nav.main-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 5px;
+/* ---------------------------------------------------------------------
+   3. HEADER — sticky positioning demonstration
+--------------------------------------------------------------------- */
+.site-header {
+  position: sticky;   /* Beyond-normal-flow requirement #1: sticky nav */
+  top: 0;
+  z-index: 100;        /* z-index requirement */
+  background: var(--navy);
+  color: #fff;
+  box-shadow: var(--shadow);
 }
 
-nav.main-nav > ul > li > a {
-    color: #ffffff;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
+.header-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;              /* Flexbox layout */
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-/* Pseudo-class: :hover */
-nav.main-nav > ul > li > a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: #a0c4e8;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Pseudo-class: :focus */
-nav.main-nav > ul > li > a:focus {
-    outline: 2px solid #a0c4e8;
-    outline-offset: 2px;
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-accent), var(--amber)); /* gradient */
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.85rem;
+  font-family: 'Baloo 2', cursive;
 }
 
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
 
-/* ===== 3. HERO SECTION ===== */
-/* Note: .hero p{} styles are defined in INTERNAL CSS (see <style> in <head>) */
+.brand-text span {
+  font-size: 0.78rem;
+  color: #a9b3c9;
+}
 
+.main-nav ul {
+  display: flex;
+  gap: 22px;
+}
+
+.main-nav a {
+  color: #dbe3f2;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 6px 2px;
+  position: relative;         /* relative positioning for underline effect */
+  transition: color 0.25s ease;  /* transition requirement */
+}
+
+.main-nav a::after {           /* pseudo-element */
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: var(--blue-accent);
+  transition: width 0.25s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {           /* pseudo-class: hover / focus state */
+  color: #ffffff;
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+  width: 100%;
+}
+
+.main-nav a:focus-visible {
+  outline: 2px solid var(--blue-accent);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------
+   4. HERO SECTION
+--------------------------------------------------------------------- */
 .hero {
-    position: relative;
-    height: 420px;
-    overflow: hidden;        /* overflow property */
+  /* Dark gradient overlay + college photo. Replace campus.jpg with your
+     own image (same file name, or update the path below) and drop it in
+     the same folder as index.html / style.css. */
+  background:
+    linear-gradient(135deg, rgba(16,24,43,0.82) 0%, rgba(27,42,74,0.75) 55%, rgba(16,24,43,0.88) 100%),
+    url('image.png') center / cover no-repeat;
+  color: #fff;
+  text-align: center;
+  padding: 90px 20px 100px;
 }
 
-.hero-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+.hero-content {
+  max-width: 760px;
+  margin: 0 auto;
 }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(26, 54, 93, 0.85), rgba(74, 144, 217, 0.7));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-    padding: 20px;
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.78rem;
+  color: var(--blue-accent);
+  margin-bottom: 14px;
 }
 
-.hero-overlay h1 {
-    font-size: 2.2rem;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);   /* text-shadow property */
-    margin-bottom: 10px;
+.hero h1 {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  line-height: 1.25;
+  margin-bottom: 18px;
 }
 
-.hero-overlay .cta-btn {
-    display: inline-block;
-    background-color: #ffffff;
-    color: #1a365d;
-    padding: 14px 32px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    cursor: pointer;       /* cursor property */
-    margin-top: 10px;
+.hero-sub {
+  color: #c8d1e6;
+  margin-bottom: 32px;
+  font-size: 1.02rem;
 }
 
-/* Pseudo-class: :hover with transform */
-.hero-overlay .cta-btn:hover {
-    transform: scale(1.05);   /* transform property */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+.cta-btn {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 14px 34px;
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(255, 182, 72, 0.35); /* box-shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* transition */
 }
 
-.hero-overlay .cta-btn:focus {
-    outline: 3px solid #a0c4e8;
-    outline-offset: 3px;
+.cta-btn:hover {
+  transform: translateY(-3px) scale(1.03); /* transform */
+  box-shadow: 0 12px 26px rgba(255, 182, 72, 0.45);
 }
 
-
-/* ===== 4. EVENT CARDS – FLEXBOX LAYOUT ===== */
-
-.events-section {
-    padding: 50px 20px;
-    text-align: center;
-    background-color: #f4f6f9;
+/* ---------------------------------------------------------------------
+   5. EVENT CATALOGUE — CSS Grid layout (primary layout requirement)
+--------------------------------------------------------------------- */
+.events {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 70px 24px 40px;
 }
 
-.events-section h2 {
-    font-size: 2rem;
-    color: #1a365d;
-    margin-bottom: 5px;
+.section-title {
+  font-size: 1.9rem;
+  color: var(--blue-deep);
+  text-align: center;
 }
 
-.sub-title {
-    color: #666666;
-    font-size: 1rem;
-    margin-bottom: 35px;
+.section-sub {
+  text-align: center;
+  color: var(--text-muted);
+  margin: 8px 0 40px;
 }
 
-/* FLEXBOX: card container */
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
+.event-grid {
+  display: grid;                              /* CSS Grid */
+  grid-template-columns: repeat(2, 1fr);       /* 2 columns on desktop */
+  gap: 28px;
 }
 
+.event-card {
+  position: relative;              /* relative positioning, for badge */
+  background: var(--card-bg);
+  border: 1px solid #e7ebf3;       /* box model: border */
+  border-radius: var(--radius);    /* border-radius */
+  padding: 26px 24px;              /* box model: padding */
+  margin: 0;                       /* box model: margin (grid gap handles spacing) */
+  box-shadow: var(--shadow);
+  overflow: hidden;                /* overflow property */
+  cursor: default;                 /* cursor property */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+/* NOTE ON BOX MODEL — see technical-note.md for the full width calculation
+   of this card (content + padding 24px*2 + border 1px*2, content-box vs
+   border-box, using box-sizing: border-box as declared in the reset). */
 
-/* ===== EVENT CARD – BOX MODEL DEMONSTRATION ===== */
-/*
- * BOX MODEL CALCULATION (for .card class)
- * =========================================
- * Each card has:
- *   content width:  250px
- *   padding:        20px on all sides
- *   border:         2px solid on all sides
- *   margin:         20px on all sides
- *
- * TOTAL HORIZONTAL WIDTH (default content-box):
- *   = content + padding-left + padding-right + border-left + border-right
- *     + margin-left + margin-right
- *   = 250 + 20 + 20 + 2 + 2 + 20 + 20
- *   = 334px
- *
- * WITH box-sizing: border-box:
- *   padding and border are included INSIDE the 250px width.
- *   Total horizontal space = 250 + 20 + 20 (margin only) = 290px
- *   But the card itself stays 250px wide.
- * =========================================
- */
-
-/* Class selector: .card */
-.card {
-    background-color: #ffffff;
-    border: 2px solid #e2e8f0;    /* border demonstration */
-    border-radius: 10px;          /* border-radius property */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);   /* box-shadow property */
-    overflow: hidden;             /* overflow property */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* BOX MODEL values */
-    width: 250px;                 /* content width */
-    padding: 20px;                /* padding all sides */
-    margin: 20px;                 /* margin all sides */
-    position: relative;           /* needed for absolute-positioned badge */
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 34px rgba(16, 24, 43, 0.16);
 }
 
-/* Pseudo-class: :hover with transform */
-.card:hover {
-    transform: translateY(-6px);   /* transform property */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+.event-card::before {             /* pseudo-element: accent strip */
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--blue-accent), var(--amber));
 }
 
-/* Descendant selector: .card .card-img */
-.card .card-img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 12px;
+.event-meta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
 }
 
-/* Descendant selector: .card .card-body */
-.card .card-body {
-    text-align: left;
+.event-desc {
+  margin: 12px 0 18px;
+  font-size: 0.95rem;
 }
 
-/* Descendant selector: .card h3 */
-.card h3 {
-    font-size: 1.05rem;
-    color: #1a365d;
-    margin-bottom: 6px;
-}
-
-/* Pseudo-element: .card h3::after */
-.card h3::after {
-    content: '';
-    display: block;
-    width: 40px;
-    height: 3px;
-    background-color: #4a90d9;
-    margin-top: 6px;
-    border-radius: 2px;
-}
-
-.card .category {
-    font-size: 0.8rem;
-    color: #718096;
-    margin-bottom: 6px;
-}
-
-.card .date,
-.card .venue {
-    font-size: 0.85rem;
-    color: #4a5568;
-    margin-bottom: 4px;
-}
-
-.card .desc {
-    font-size: 0.85rem;
-    color: #4a5568;
-    line-height: 1.5;
-    margin-bottom: 12px;
-}
-
-.card .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.card .status-text.open {
-    color: #38a169;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.card .status-text.limited {
-    color: #dd6b20;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.card .reg-btn {
-    display: inline-block;
-    background-color: #4a90d9;
-    color: #ffffff;
-    padding: 7px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    cursor: pointer;
-}
-
-.card .reg-btn:hover {
-    background-color: #357abd;
-    transform: scale(1.05);
-}
-
-.card .reg-btn:focus {
-    outline: 2px solid #4a90d9;
-    outline-offset: 2px;
-}
-
-
-/* ===== ABSOLUTE POSITIONED STATUS BADGE ===== */
-/* POSITIONING: absolute – positioned relative to parent .card */
 .status-badge {
-    position: absolute;
-    top: 170px;
-    right: 12px;
-    padding: 3px 12px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: #ffffff;
-    z-index: 5;
+  position: absolute;              /* absolute positioning requirement */
+  top: 16px;
+  right: 16px;
+  z-index: 5;                      /* z-index requirement */
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
-.status-badge.open {
-    background-color: #38a169;
+.status-badge.open    { background: #e3f8ec; color: #1c8a4b; }
+.status-badge.filling { background: #fff3d6; color: #9a6b00; }
+.status-badge.closed  { background: #fde5e5; color: #b83232; }
+
+.register-btn {
+  display: inline-block;
+  background: var(--blue-deep);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
 }
 
-.status-badge.limited {
-    background-color: #dd6b20;
+.register-btn:hover { background: var(--blue-accent); color: var(--navy); }
+.register-btn:focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
+
+.register-btn.disabled {
+  background: #d7dbe4;
+  color: #8991a3;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
-
-/* ===== 5. REGISTRATION FORM ===== */
-
-.form-section {
-    padding: 50px 20px;
-    background-color: #e8edff;
-    text-align: center;
-}
-
-.form-section h2 {
-    font-size: 2rem;
-    color: #1a365d;
-    margin-bottom: 5px;
+/* ---------------------------------------------------------------------
+   6. REGISTRATION FORM
+--------------------------------------------------------------------- */
+.register {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 30px 24px 90px;
 }
 
 .reg-form {
-    max-width: 500px;
-    margin: 30px auto 0;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    text-align: left;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 34px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
 }
 
 .form-row {
-    margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-row.full-width {
+  grid-column: 1 / -1;
 }
 
 .form-row label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-    color: #2d3748;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--blue-deep);
 }
 
-/* Attribute selector: input[type=email] */
-input[type="email"],
-input[type="text"] {
-    width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #cbd5e0;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
+.form-row input,
+.form-row select {
+  border: 1px solid #d7dde8;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  background: #fbfcfe;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-input[type="email"]:focus,
-input[type="text"]:focus {
-    border-color: #4a90d9;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.2);
+.form-row input:focus,
+.form-row select:focus {           /* pseudo-class: focus state */
+  outline: none;
+  border-color: var(--blue-accent);
+  box-shadow: 0 0 0 3px rgba(92, 179, 224, 0.25);
 }
 
-select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #cbd5e0;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-family: inherit;
-    background-color: #ffffff;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
+.submit-btn {
+  grid-column: 1 / -1;
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
-select:focus {
-    border-color: #4a90d9;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.2);
+.submit-btn:hover { transform: translateY(-2px); }
+.submit-btn:focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------------
+   7. FOOTER (visual layout — colour/typography set via internal CSS
+      in the <head>, structural layout defined here)
+--------------------------------------------------------------------- */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 50px 24px 20px;
 }
 
+.footer-col p { margin-top: 8px; font-size: 0.9rem; }
+.footer-col strong { font-family: 'Baloo 2', cursive; }
 
-/* ===== 6. FOOTER ===== */
-
-.site-footer {
-    background-color: #1a365d;
-    color: #e2e8f0;
-    padding: 35px 20px 15px;
+.copyright {
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 18px 0;
+  border-top: 1px solid #26314c;
+  margin: 0 24px;
+  opacity: 0.75; /* opacity property */
 }
 
-.footer-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.footer-col {
-    flex: 1;
-    min-width: 200px;
-}
-
-.footer-col h3 {
-    color: #ffffff;
-    margin-bottom: 12px;
-    font-size: 1rem;
-}
-
-.footer-col p {
-    font-size: 0.85rem;
-    margin-bottom: 4px;
-    line-height: 1.6;
-}
-
-.footer-col ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.footer-col ul li {
-    margin-bottom: 6px;
-}
-
-.footer-col ul li a {
-    color: #a0c4e8;
-    text-decoration: none;
-    font-size: 0.85rem;
-    transition: color 0.3s ease;
-}
-
-.footer-col ul li a:hover {
-    color: #ffffff;
-}
-
-.footer-col ul li a:focus {
-    outline: 1px solid #a0c4e8;
-}
-
-.footer-bottom {
-    text-align: center;
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.8rem;
-    color: #a0c4e8;
-}
-
-
-/* ===== 7. FIXED HELP BUTTON ===== */
-/* POSITIONING: fixed */
+/* ---------------------------------------------------------------------
+   8. FIXED HELP BUTTON — fixed positioning demonstration
+--------------------------------------------------------------------- */
 .help-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    background-color: #4a90d9;
-    color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(74, 144, 217, 0.4);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    z-index: 999;
+  position: fixed;             /* Beyond-normal-flow requirement #2: fixed */
+  bottom: 26px;
+  right: 26px;
+  z-index: 200;
+  background: var(--blue-deep);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 14px 22px;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(16, 24, 43, 0.35);
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .help-btn:hover {
-    transform: scale(1.1);
-    background-color: #357abd;
+  background: var(--blue-accent);
+  color: var(--navy);
+  transform: scale(1.06);
 }
 
-
-/* ===== 8. RESPONSIVE DESIGN – MEDIA QUERIES ===== */
-
-@media (max-width: 768px) {
-
-    /* Navigation: stack vertically */
-    .header-wrapper {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    nav.main-nav ul {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-    }
-
-    nav.main-nav > ul > li > a {
-        display: block;
-        width: 100%;
-        text-align: center;
-        padding: 10px;
-    }
-
-    /* Cards: single column */
-    .card-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card {
-        width: 100%;
-        max-width: 350px;
-        margin: 15px 0;
-    }
-
-    /* Hero adjustments */
-    .hero {
-        height: 350px;
-    }
-
-    .hero-overlay h1 {
-        font-size: 1.6rem;
-    }
-
-    /* Footer: stack columns */
-    .footer-grid {
-        flex-direction: column;
-    }
-
-    /* Help button repositioned */
-    .help-btn {
-        bottom: 15px;
-        right: 15px;
-        width: 42px;
-        height: 42px;
-        font-size: 1.2rem;
-    }
+/* ---------------------------------------------------------------------
+   9. RESPONSIVE DESIGN — media queries
+--------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .event-grid {
+    grid-template-columns: 1fr;   /* single column on tablets/mobiles */
+  }
+  .reg-form {
+    grid-template-columns: 1fr;
+  }
+  .form-row.full-width { grid-column: 1 / -1; }
 }
 
-
-/* ===== 9. ADDITIONAL CSS PROPERTIES DEMONSTRATION ===== */
-
-/* max-width property */
-.events-section {
-    max-width: 100%;
-}
-
-/* gradient property (already used in hero-overlay background) */
-.hero-overlay {
-    background: linear-gradient(135deg, rgba(26, 54, 93, 0.85), rgba(74, 144, 217, 0.7));
-}
-
-/* opacity property */
-.hero-overlay .cta-btn {
-    opacity: 1;
-}
-
-.hero-overlay .cta-btn:hover {
-    opacity: 0.95;
-}
-
-/* visibility demonstration */
-.brand {
-    visibility: visible;
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .main-nav ul {
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .hero {
+    padding: 70px 16px 80px;
+  }
+  .help-btn {
+    padding: 12px 18px;
+    font-size: 0.82rem;
+    bottom: 16px;
+    right: 16px;
+  }
+  .footer-inner {
+    flex-direction: column;
+    padding: 40px 20px 10px;
+  }
 }
