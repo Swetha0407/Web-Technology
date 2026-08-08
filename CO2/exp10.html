@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Debugging Demo</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#eef2ff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:400px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    text-align:center;
+}
+
+h1{
+    color:#4f46e5;
+    margin-bottom:20px;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:10px;
+    border:2px solid #ccc;
+    border-radius:6px;
+}
+
+button{
+    padding:10px 25px;
+    background:#4f46e5;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#3730a3;
+}
+
+#result{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Debugging Demo</h1>
+
+<input type="number" id="num1" placeholder="Enter first number">
+
+<input type="number" id="num2" placeholder="Enter second number">
+
+<br>
+
+<button onclick="calculate()">Calculate</button>
+
+<p id="result">Result will appear here</p>
+
+</div>
+
+
+<script>
+
+function calculate(){
+
+    try{
+
+        let a =
+            Number(document.getElementById("num1").value);
+
+        let b =
+            Number(document.getElementById("num2").value);
+
+
+        console.log("First Number:",a);
+        console.log("Second Number:",b);
+
+
+        debugger;
+
+
+        if(isNaN(a) || isNaN(b)){
+
+            throw new Error("Please enter valid numbers.");
+
+        }
+
+
+        let result = a + b;
+
+
+        console.log("Calculated Result:",result);
+
+
+        document.getElementById("result").textContent =
+            "Result: " + result;
+
+    }
+
+    catch(error){
+
+        console.error("Error:",error.message);
+
+        document.getElementById("result").textContent =
+            error.message;
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
