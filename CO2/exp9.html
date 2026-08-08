@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shopping Cart & Billing System</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    padding:30px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+}
+
+h1{
+    text-align:center;
+    color:#333;
+    margin-bottom:30px;
+}
+
+h2{
+    color:#667eea;
+    margin-bottom:15px;
+}
+
+/* Product Form */
+
+.product-form{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:12px;
+    margin-bottom:35px;
+}
+
+input,select{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#667eea;
+}
+
+button{
+    border:none;
+    border-radius:8px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.add-btn{
+    background:#667eea;
+    color:white;
+}
+
+.add-btn:hover{
+    background:#5568d9;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#667eea;
+    color:white;
+    padding:14px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f5f5ff;
+}
+
+/* Quantity Buttons */
+
+.qty-btn{
+    padding:5px 10px;
+    background:#eee;
+    margin:0 5px;
+}
+
+.qty-btn:hover{
+    background:#ddd;
+}
+
+.delete-btn{
+    background:#dc3545;
+    color:white;
+    padding:7px 12px;
+}
+
+.delete-btn:hover{
+    background:#c82333;
+}
+
+/* Billing */
+
+.billing{
+    max-width:400px;
+    margin-left:auto;
+    margin-top:30px;
+    padding:20px;
+    background:#f7f7ff;
+    border-radius:12px;
+}
+
+.bill-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.grand-total{
+    font-size:22px;
+    font-weight:bold;
+    color:#667eea;
+}
+
+.checkout{
+    width:100%;
+    margin-top:20px;
+    background:#28a745;
+    color:white;
+    font-size:16px;
+}
+
+.checkout:hover{
+    background:#218838;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#777;
+}
+
+/* Responsive */
+
+@media(max-width:750px){
+
+    body{
+        padding:15px;
+    }
+
+    .container{
+        padding:20px;
+    }
+
+    .product-form{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        font-size:13px;
+    }
+
+    th,td{
+        padding:8px 4px;
+    }
+
+    .billing{
+        max-width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛒 Shopping Cart & Billing System</h1>
+
+
+<!-- Product Form -->
+
+<h2>Add Product</h2>
+
+<div class="product-form">
+
+<input
+    type="text"
+    id="productName"
+    placeholder="Product name">
+
+<input
+    type="number"
+    id="price"
+    placeholder="Price">
+
+<input
+    type="number"
+    id="quantity"
+    placeholder="Quantity"
+    min="1"
+    value="1">
+
+<button
+    class="add-btn"
+    onclick="addProduct()">
+    Add to Cart
+</button>
+
+</div>
+
+
+<!-- Cart -->
+
+<h2>Shopping Cart</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Total</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="cartBody">
+
+<tr>
+<td colspan="5" class="empty">
+Cart is empty
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<!-- Billing -->
+
+<div class="billing">
+
+<div class="bill-row">
+
+<span>Subtotal</span>
+
+<span id="subtotal">
+₹0.00
+</span>
+
+</div>
+
+
+<div class="bill-row">
+
+<span>Discount (10%)</span>
+
+<span id="discount">
+₹0.00
+</span>
+
+</div>
+
+
+<div class="bill-row">
+
+<span>Tax (18%)</span>
+
+<span id="tax">
+₹0.00
+</span>
+
+</div>
+
+
+<div class="bill-row grand-total">
+
+<span>Grand Total</span>
+
+<span id="grandTotal">
+₹0.00
+</span>
+
+</div>
+
+
+<button
+    class="checkout"
+    onclick="checkout()">
+
+    Generate Bill
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* Array to store cart products */
+
+let cart = [];
+
+
+/* Product Object */
+
+function addProduct(){
+
+    let name =
+        document.getElementById("productName").value.trim();
+
+    let price =
+        Number(document.getElementById("price").value);
+
+    let quantity =
+        Number(document.getElementById("quantity").value);
+
+
+    /* Validation */
+
+    if(name === "" || price <= 0 || quantity <= 0){
+
+        alert("Please enter valid product details.");
+
+        return;
+
+    }
+
+
+    /* Create Object */
+
+    let product = {
+
+        id: Date.now(),
+
+        name: name,
+
+        price: price,
+
+        quantity: quantity
+
+    };
+
+
+    /* Add object to array */
+
+    cart.push(product);
+
+
+    /* Clear inputs */
+
+    document.getElementById("productName").value = "";
+
+    document.getElementById("price").value = "";
+
+    document.getElementById("quantity").value = 1;
+
+
+    displayCart();
+
+}
+
+
+/* Display Cart */
+
+function displayCart(){
+
+    let body =
+        document.getElementById("cartBody");
+
+    body.innerHTML = "";
+
+
+    if(cart.length === 0){
+
+        body.innerHTML = `
+
+        <tr>
+
+        <td colspan="5" class="empty">
+        Cart is empty
+        </td>
+
+        </tr>
+
+        `;
+
+        updateBill();
+
+        return;
+
+    }
+
+
+    /* Loop through array */
+
+    for(let i = 0; i < cart.length; i++){
+
+        let product = cart[i];
+
+        let total =
+            product.price * product.quantity;
+
+
+        body.innerHTML += `
+
+        <tr>
+
+        <td>${product.name}</td>
+
+        <td>₹${product.price.toFixed(2)}</td>
+
+        <td>
+
+            <button
+                class="qty-btn"
+                onclick="changeQuantity(${product.id},-1)">
+                −
+            </button>
+
+            ${product.quantity}
+
+            <button
+                class="qty-btn"
+                onclick="changeQuantity(${product.id},1)">
+                +
+            </button>
+
+        </td>
+
+        <td>₹${total.toFixed(2)}</td>
+
+        <td>
+
+            <button
+                class="delete-btn"
+                onclick="deleteProduct(${product.id})">
+                Delete
+            </button>
+
+        </td>
+
+        </tr>
+
+        `;
+
+    }
+
+
+    updateBill();
+
+}
+
+
+/* Change Quantity */
+
+function changeQuantity(id,change){
+
+    for(let i = 0; i < cart.length; i++){
+
+        if(cart[i].id === id){
+
+            cart[i].quantity += change;
+
+
+            if(cart[i].quantity <= 0){
+
+                cart.splice(i,1);
+
+            }
+
+            break;
+
+        }
+
+    }
+
+    displayCart();
+
+}
+
+
+/* Delete Product */
+
+function deleteProduct(id){
+
+    cart = cart.filter(function(product){
+
+        return product.id !== id;
+
+    });
+
+    displayCart();
+
+}
+
+
+/* Calculate Bill */
+
+function updateBill(){
+
+    let subtotal = 0;
+
+
+    /* Calculate subtotal */
+
+    for(let i = 0; i < cart.length; i++){
+
+        subtotal +=
+            cart[i].price * cart[i].quantity;
+
+    }
+
+
+    /* Discount */
+
+    let discount = subtotal * 0.10;
+
+
+    /* Amount after discount */
+
+    let amountAfterDiscount =
+        subtotal - discount;
+
+
+    /* Tax */
+
+    let tax =
+        amountAfterDiscount * 0.18;
+
+
+    /* Grand Total */
+
+    let grandTotal =
+        amountAfterDiscount + tax;
+
+
+    /* Update DOM */
+
+    document.getElementById("subtotal")
+        .textContent =
+        "₹" + subtotal.toFixed(2);
+
+    document.getElementById("discount")
+        .textContent =
+        "₹" + discount.toFixed(2);
+
+    document.getElementById("tax")
+        .textContent =
+        "₹" + tax.toFixed(2);
+
+    document.getElementById("grandTotal")
+        .textContent =
+        "₹" + grandTotal.toFixed(2);
+
+}
+
+
+/* Generate Bill */
+
+function checkout(){
+
+    if(cart.length === 0){
+
+        alert("Your cart is empty!");
+
+        return;
+
+    }
+
+
+    updateBill();
+
+    let total =
+        document.getElementById("grandTotal")
+        .textContent;
+
+
+    alert(
+        "Bill Generated Successfully!\n\n" +
+        "Grand Total: " + total
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>
