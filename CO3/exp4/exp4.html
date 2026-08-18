@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Browser Information Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 30px;
+
+            background:
+                radial-gradient(circle at top left, #0891b2, transparent 35%),
+                radial-gradient(circle at bottom right, #22c55e, transparent 30%),
+                #0f172a;
+
+            color: white;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+
+            margin: auto;
+
+            background: rgba(15, 23, 42, 0.94);
+
+            border: 1px solid #334155;
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        /* HEADER */
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+
+            margin: auto;
+            margin-bottom: 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 18px;
+
+            background: linear-gradient(
+                135deg,
+                #0891b2,
+                #06b6d4
+            );
+
+            font-size: 30px;
+
+            box-shadow:
+                0 10px 25px rgba(6, 182, 212, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #67e8f9;
+        }
+
+        /* DASHBOARD */
+
+        .dashboard {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .card {
+            padding: 22px;
+
+            background: #1e293b;
+
+            border: 1px solid #334155;
+
+            border-radius: 15px;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            border-color: #06b6d4;
+
+            box-shadow:
+                0 10px 25px rgba(6, 182, 212, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 12px;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        .card-icon {
+            font-size: 22px;
+        }
+
+        .value {
+            color: #f8fafc;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+        /* ONLINE STATUS */
+
+        #status {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            border-radius: 20px;
+
+            background: #166534;
+
+            color: #bbf7d0;
+
+            font-size: 14px;
+        }
+
+        /* URL */
+
+        .url-card {
+            grid-column: span 2;
+        }
+
+        #url {
+            color: #67e8f9;
+
+            font-size: 15px;
+        }
+
+        /* RESIZE INFO */
+
+        .resize-note {
+            margin-top: 25px;
+
+            padding: 15px;
+
+            text-align: center;
+
+            background: #0f766e;
+
+            border-radius: 10px;
+
+            color: #ccfbf1;
+
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 30px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 22px;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .url-card {
+                grid-column: span 1;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="icon">
+            🌐
+        </div>
+
+        <h1>
+            Browser Information
+        </h1>
+
+        <p class="subtitle">
+            Real-Time Window & Browser Dashboard
+        </p>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <div class="dashboard">
+
+
+        <!-- CURRENT URL -->
+
+        <div class="card url-card">
+
+            <div class="card-header">
+
+                <span class="card-icon">🔗</span>
+
+                Current URL
+
+            </div>
+
+            <div class="value" id="url">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <!-- LANGUAGE -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">🌍</span>
+
+                Browser Language
+
+            </div>
+
+            <div class="value" id="language">
+                Loading...
+            </div>
+
+        </div>
+
+
+        <!-- ONLINE STATUS -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">📡</span>
+
+                Connection Status
+
+            </div>
+
+            <div id="status">
+                Checking...
+            </div>
+
+        </div>
+
+
+        <!-- SCREEN WIDTH -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">🖥️</span>
+
+                Screen Width
+
+            </div>
+
+            <div class="value">
+
+                <span id="screenWidth">
+                    0
+                </span>
+
+                px
+
+            </div>
+
+        </div>
+
+
+        <!-- SCREEN HEIGHT -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">📏</span>
+
+                Screen Height
+
+            </div>
+
+            <div class="value">
+
+                <span id="screenHeight">
+                    0
+                </span>
+
+                px
+
+            </div>
+
+        </div>
+
+
+        <!-- VIEWPORT WIDTH -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">↔️</span>
+
+                Viewport Width
+
+            </div>
+
+            <div class="value">
+
+                <span id="viewportWidth">
+                    0
+                </span>
+
+                px
+
+            </div>
+
+        </div>
+
+
+        <!-- VIEWPORT HEIGHT -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">↕️</span>
+
+                Viewport Height
+
+            </div>
+
+            <div class="value">
+
+                <span id="viewportHeight">
+                    0
+                </span>
+
+                px
+
+            </div>
+
+        </div>
+
+
+        <!-- SCROLL X -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">↔</span>
+
+                Scroll X
+
+            </div>
+
+            <div class="value">
+
+                <span id="scrollX">
+                    0
+                </span>
+
+                px
+
+            </div>
+
+        </div>
+
+
+        <!-- SCROLL Y -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <span class="card-icon">↕</span>
+
+                Scroll Y
+
+            </div>
+
+            <div class="value">
+
+                <span id="scrollY">
+                    0
+                </span>
+
+                px
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="resize-note" id="resizeNote">
+
+        ↔ Resize your browser window to see the
+        viewport values update automatically.
+
+    </div>
+
+
+    <footer>
+
+        Browser Information Dashboard • JavaScript Window Object
+
+    </footer>
+
+</div>
+
+
+<script>
+
+    /* =====================================
+       WINDOW OBJECT INFORMATION
+       ===================================== */
+
+
+    // window.location
+
+    document.getElementById("url").textContent =
+        window.location.href;
+
+
+    // navigator.language
+
+    document.getElementById("language").textContent =
+        navigator.language;
+
+
+    // navigator.onLine
+
+    function updateStatus() {
+
+        const status =
+            document.getElementById("status");
+
+        if (navigator.onLine) {
+
+            status.textContent = "Online";
+
+            status.style.background = "#166534";
+
+            status.style.color = "#bbf7d0";
+
+        } else {
+
+            status.textContent = "Offline";
+
+            status.style.background = "#991b1b";
+
+            status.style.color = "#fecaca";
+
+        }
+
+    }
+
+
+    // screen width and height
+
+    document.getElementById("screenWidth")
+        .textContent = screen.width;
+
+    document.getElementById("screenHeight")
+        .textContent = screen.height;
+
+
+    /* =====================================
+       VIEWPORT INFORMATION
+       ===================================== */
+
+    function updateViewport() {
+
+        document.getElementById("viewportWidth")
+            .textContent = window.innerWidth;
+
+        document.getElementById("viewportHeight")
+            .textContent = window.innerHeight;
+
+    }
+
+
+    /* =====================================
+       SCROLL POSITION
+       ===================================== */
+
+    function updateScroll() {
+
+        document.getElementById("scrollX")
+            .textContent = window.scrollX;
+
+        document.getElementById("scrollY")
+            .textContent = window.scrollY;
+
+    }
+
+
+    /* =====================================
+       RESIZE EVENT
+       ===================================== */
+
+    window.addEventListener(
+        "resize",
+        function() {
+
+            updateViewport();
+
+        }
+    );
+
+
+    /* =====================================
+       ONLINE / OFFLINE EVENTS
+       ===================================== */
+
+    window.addEventListener(
+        "online",
+        updateStatus
+    );
+
+    window.addEventListener(
+        "offline",
+        updateStatus
+    );
+
+
+    /* =====================================
+       SCROLL EVENT
+       ===================================== */
+
+    window.addEventListener(
+        "scroll",
+        updateScroll
+    );
+
+
+    /* =====================================
+       INITIAL VALUES
+       ===================================== */
+
+    updateStatus();
+
+    updateViewport();
+
+    updateScroll();
+
+</script>
+
+</body>
+
+</html>
