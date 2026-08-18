@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Result Processing</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            background:
+                radial-gradient(circle at top left, #0ea5e9, transparent 35%),
+                radial-gradient(circle at bottom right, #14b8a6, transparent 35%),
+                #0f172a;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 22px;
+
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #0284c7;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 22px;
+        }
+
+        .section h2 {
+            color: #0369a1;
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+        }
+
+        .marks {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #0284c7,
+                #0d9488
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+
+            .grid,
+            .marks {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Student Result Processing</h1>
+
+    <p class="subtitle">
+        Enter student details and marks
+    </p>
+
+
+    <form action="StudentResultServlet" method="post">
+
+        <!-- STUDENT DETAILS -->
+
+        <div class="section">
+
+            <h2>Student Details</h2>
+
+            <div class="grid">
+
+                <div>
+                    <label>Student Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter name"
+                    >
+                </div>
+
+                <div>
+                    <label>Register Number</label>
+                    <input
+                        type="text"
+                        name="regno"
+                        placeholder="Enter register number"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MARKS -->
+
+        <div class="section">
+
+            <h2>Subject Marks</h2>
+
+            <div class="marks">
+
+                <div>
+                    <label>Subject 1</label>
+                    <input
+                        type="text"
+                        name="mark1"
+                        placeholder="0 - 100"
+                    >
+                </div>
+
+                <div>
+                    <label>Subject 2</label>
+                    <input
+                        type="text"
+                        name="mark2"
+                        placeholder="0 - 100"
+                    >
+                </div>
+
+                <div>
+                    <label>Subject 3</label>
+                    <input
+                        type="text"
+                        name="mark3"
+                        placeholder="0 - 100"
+                    >
+                </div>
+
+                <div>
+                    <label>Subject 4</label>
+                    <input
+                        type="text"
+                        name="mark4"
+                        placeholder="0 - 100"
+                    >
+                </div>
+
+                <div>
+                    <label>Subject 5</label>
+                    <input
+                        type="text"
+                        name="mark5"
+                        placeholder="0 - 100"
+                    >
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button type="submit">
+            Calculate Result
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
