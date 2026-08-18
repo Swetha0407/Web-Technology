@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Event Registration</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+
+            background:
+                radial-gradient(circle at top left, #14b8a6, transparent 35%),
+                radial-gradient(circle at bottom right, #f59e0b, transparent 35%),
+                #0f172a;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+
+            background: #ffffff;
+
+            border-radius: 24px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        /* HEADER */
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .event-icon {
+            width: 65px;
+            height: 65px;
+
+            margin: auto;
+            margin-bottom: 15px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 18px;
+
+            background: linear-gradient(
+                135deg,
+                #0f766e,
+                #14b8a6
+            );
+
+            color: white;
+
+            font-size: 30px;
+
+            box-shadow:
+                0 10px 25px rgba(20, 184, 166, 0.35);
+        }
+
+        h1 {
+            color: #0f172a;
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: #0f766e;
+            font-size: 15px;
+        }
+
+        /* CONTENT */
+
+        .content {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 25px;
+        }
+
+        /* EVENT INFO */
+
+        .event-info {
+            padding: 30px;
+
+            border-radius: 18px;
+
+            background: linear-gradient(
+                145deg,
+                #0f766e,
+                #0d9488,
+                #14b8a6
+            );
+
+            color: white;
+
+            box-shadow:
+                0 15px 35px rgba(15, 118, 110, 0.3);
+
+            transition: 0.3s;
+        }
+
+        .event-info:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-info h2 {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .event-info p {
+            line-height: 1.8;
+            color: #ecfeff;
+        }
+
+        .event-details {
+            margin-top: 25px;
+        }
+
+        .detail {
+            padding: 12px;
+
+            margin-bottom: 10px;
+
+            border-radius: 9px;
+
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .detail strong {
+            color: #fef3c7;
+        }
+
+        /* FORM */
+
+        .form-card {
+            padding: 25px;
+
+            background: #f8fafc;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 18px;
+        }
+
+        .form-card h2 {
+            color: #0f172a;
+
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            background: white;
+
+            color: #0f172a;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #14b8a6;
+
+            box-shadow:
+                0 0 0 3px rgba(20, 184, 166, 0.15);
+        }
+
+        /* INPUT EVENT MESSAGE */
+
+        #nameStatus {
+            font-size: 12px;
+
+            margin-top: 5px;
+
+            color: #64748b;
+        }
+
+        /* BUTTONS */
+
+        button {
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #0f766e,
+                #14b8a6
+            );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 18px rgba(15, 118, 110, 0.3);
+        }
+
+        /* INTRINSIC EVENT BUTTON */
+
+        #intrinsicBtn {
+            margin-top: 12px;
+
+            background: #f59e0b;
+        }
+
+        #intrinsicBtn:hover {
+            background: #d97706;
+        }
+
+        /* RESULT */
+
+        #result {
+            display: none;
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: #ecfeff;
+
+            border-left: 5px solid #14b8a6;
+
+            color: #134e4a;
+        }
+
+        #result h3 {
+            margin-bottom: 10px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding: 22px;
+            }
+
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="event-icon">
+            🎫
+        </div>
+
+        <h1>
+            Event Registration
+        </h1>
+
+        <p class="subtitle">
+            Interactive JavaScript Event Handling
+        </p>
+
+    </div>
+
+
+    <div class="content">
+
+        <!-- EVENT INFORMATION -->
+
+        <div class="event-info">
+
+            <h2>
+                TechFest 2026
+            </h2>
+
+            <p>
+                Join us for an exciting technology event
+                featuring workshops, competitions and
+                expert sessions.
+            </p>
+
+            <div class="event-details">
+
+                <div class="detail">
+                    📅 <strong>Date:</strong> 25 August 2026
+                </div>
+
+                <div class="detail">
+                    📍 <strong>Venue:</strong> Main Auditorium
+                </div>
+
+                <div class="detail">
+                    🕘 <strong>Time:</strong> 9:00 AM – 4:00 PM
+                </div>
+
+                <div class="detail">
+                    🎟️ <strong>Entry:</strong> Free
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGISTRATION FORM -->
+
+        <div class="form-card">
+
+            <h2>
+                Register Now
+            </h2>
+
+            <form id="registrationForm">
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                    >
+
+                    <p id="nameStatus">
+                        Start typing your name...
+                    </p>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Department
+                    </label>
+
+                    <select id="department">
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                        <option>
+                            BCA
+                        </option>
+
+                        <option>
+                            B.Sc Computer Science
+                        </option>
+
+                        <option>
+                            B.Com
+                        </option>
+
+                        <option>
+                            BBA
+                        </option>
+
+                        <option>
+                            MCA
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Event Type
+                    </label>
+
+                    <select id="eventType">
+
+                        <option value="">
+                            Select Event
+                        </option>
+
+                        <option>
+                            Workshop
+                        </option>
+
+                        <option>
+                            Hackathon
+                        </option>
+
+                        <option>
+                            Technical Talk
+                        </option>
+
+                        <option>
+                            Coding Contest
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button type="submit">
+                    Submit Registration
+                </button>
+
+
+                <!-- INTRINSIC onclick -->
+
+                <button
+                    type="button"
+                    id="intrinsicBtn"
+                    onclick="intrinsicMessage()"
+                >
+                    Test onclick Event
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div id="result">
+
+        <h3>
+            ✅ Registration Successful!
+        </h3>
+
+        <p id="resultText"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================
+       INTRINSIC EVENT HANDLING
+       ========================================= */
+
+    function intrinsicMessage() {
+
+        alert(
+            "This button uses intrinsic onclick event handling!"
+        );
+
+    }
+
+
+    /* =========================================
+       MODERN EVENT HANDLING
+       addEventListener()
+       ========================================= */
+
+    const nameInput =
+        document.getElementById("name");
+
+    const emailInput =
+        document.getElementById("email");
+
+    const department =
+        document.getElementById("department");
+
+    const eventType =
+        document.getElementById("eventType");
+
+    const form =
+        document.getElementById("registrationForm");
+
+    const result =
+        document.getElementById("result");
+
+    const resultText =
+        document.getElementById("resultText");
+
+    const nameStatus =
+        document.getElementById("nameStatus");
+
+
+    /* =========================================
+       input EVENT
+       Runs whenever user types
+       ========================================= */
+
+    nameInput.addEventListener(
+        "input",
+        function() {
+
+            nameStatus.textContent =
+                "Typing: " + nameInput.value;
+
+        }
+    );
+
+
+    /* =========================================
+       focus EVENT
+       ========================================= */
+
+    emailInput.addEventListener(
+        "focus",
+        function() {
+
+            emailInput.style.backgroundColor =
+                "#ecfeff";
+
+        }
+    );
+
+
+    /* =========================================
+       blur EVENT
+       ========================================= */
+
+    emailInput.addEventListener(
+        "blur",
+        function() {
+
+            emailInput.style.backgroundColor =
+                "white";
+
+        }
+    );
+
+
+    /* =========================================
+       change EVENT
+       ========================================= */
+
+    department.addEventListener(
+        "change",
+        function() {
+
+            alert(
+                "Department selected: "
+                + department.value
+            );
+
+        }
+    );
+
+
+    /* =========================================
+       mouseover EVENT
+       ========================================= */
+
+    eventType.addEventListener(
+        "mouseover",
+        function() {
+
+            eventType.style.borderColor =
+                "#f59e0b";
+
+        }
+    );
+
+
+    /* =========================================
+       mouseout EVENT
+       ========================================= */
+
+    eventType.addEventListener(
+        "mouseout",
+        function() {
+
+            eventType.style.borderColor =
+                "#cbd5e1";
+
+        }
+    );
+
+
+    /* =========================================
+       submit EVENT
+       ========================================= */
+
+    form.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            if (
+                nameInput.value === "" ||
+                emailInput.value === "" ||
+                department.value === "" ||
+                eventType.value === ""
+            ) {
+
+                alert(
+                    "Please fill all the fields."
+                );
+
+                return;
+
+            }
+
+
+            result.style.display = "block";
+
+            resultText.textContent =
+                "Name: " +
+                nameInput.value +
+                " | Email: " +
+                emailInput.value +
+                " | Department: " +
+                department.value +
+                " | Event: " +
+                eventType.value;
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
