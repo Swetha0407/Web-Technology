@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cross-Browser Compatibility</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 30px;
+
+            background:
+                radial-gradient(circle at top left, #38bdf8, transparent 35%),
+                radial-gradient(circle at bottom right, #f97316, transparent 30%),
+                #0f172a;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+
+            background: white;
+            padding: 35px;
+
+            border-radius: 24px;
+
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.4);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+
+            margin: auto;
+            margin-bottom: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: linear-gradient(
+                135deg,
+                #0284c7,
+                #38bdf8
+            );
+
+            color: white;
+            font-size: 30px;
+        }
+
+        h1 {
+            color: #0f172a;
+            font-size: 32px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #0284c7;
+        }
+
+        .dashboard {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+        .card {
+            padding: 22px;
+
+            background: #f8fafc;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 15px;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            border-color: #38bdf8;
+        }
+
+        .card h3 {
+            color: #334155;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            display: inline-block;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .supported {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .unsupported {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .fallback {
+            margin-top: 30px;
+
+            padding: 20px;
+
+            background: #fff7ed;
+
+            border-left: 5px solid #f97316;
+
+            border-radius: 10px;
+
+            color: #7c2d12;
+        }
+
+        .fallback h2 {
+            margin-bottom: 8px;
+        }
+
+        #storageMessage {
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: #eff6ff;
+
+            border-radius: 10px;
+
+            color: #1e3a8a;
+
+            display: none;
+        }
+
+        button {
+            margin-top: 20px;
+
+            padding: 12px 20px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #0284c7;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0369a1;
+        }
+
+        /* CSS Feature Detection */
+
+        @supports (display: grid) {
+
+            .dashboard {
+                border-top: 3px solid #38bdf8;
+            }
+
+        }
+
+        /* Fallback for browsers without Grid */
+
+        @supports not (display: grid) {
+
+            .dashboard {
+                display: block;
+            }
+
+            .card {
+                margin-bottom: 15px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="icon">
+            🌐
+        </div>
+
+        <h1>
+            Browser Compatibility
+        </h1>
+
+        <p class="subtitle">
+            Feature Detection & Fallback Dashboard
+        </p>
+
+    </div>
+
+
+    <div class="dashboard">
+
+
+        <!-- LOCAL STORAGE -->
+
+        <div class="card">
+
+            <h3>
+                💾 localStorage
+            </h3>
+
+            <div
+                id="storageStatus"
+                class="status"
+            >
+                Checking...
+            </div>
+
+        </div>
+
+
+        <!-- QUERY SELECTOR -->
+
+        <div class="card">
+
+            <h3>
+                🔍 querySelector()
+            </h3>
+
+            <div
+                id="queryStatus"
+                class="status"
+            >
+                Checking...
+            </div>
+
+        </div>
+
+
+        <!-- CSS GRID -->
+
+        <div class="card">
+
+            <h3>
+                🎨 CSS Grid
+            </h3>
+
+            <div
+                id="gridStatus"
+                class="status"
+            >
+                Checking...
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="fallback">
+
+        <h2>
+            🛡️ Fallback Strategy
+        </h2>
+
+        <p>
+            If a browser does not support a feature,
+            the webpage uses an alternative method
+            so that the basic functionality continues
+            to work.
+        </p>
+
+        <button id="storageBtn">
+            Test Storage
+        </button>
+
+        <div id="storageMessage"></div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    /* =====================================
+       LOCAL STORAGE FEATURE DETECTION
+       ===================================== */
+
+    function checkLocalStorage() {
+
+        try {
+
+            if (typeof(Storage) !== "undefined" &&
+                window.localStorage) {
+
+                return true;
+
+            }
+
+        } catch (error) {
+
+            return false;
+
+        }
+
+        return false;
+
+    }
+
+
+    /* =====================================
+       QUERYSELECTOR FEATURE DETECTION
+       ===================================== */
+
+    function checkQuerySelector() {
+
+        return typeof document.querySelector === "function";
+
+    }
+
+
+    /* =====================================
+       CSS FEATURE DETECTION
+       ===================================== */
+
+    function checkCSSGrid() {
+
+        return CSS.supports(
+            "display",
+            "grid"
+        );
+
+    }
+
+
+    /* =====================================
+       DISPLAY STATUS
+       ===================================== */
+
+    function showStatus(elementId, supported) {
+
+        const element =
+            document.getElementById(elementId);
+
+        if (supported) {
+
+            element.textContent = "Supported";
+
+            element.classList.add("supported");
+
+        } else {
+
+            element.textContent = "Not Supported";
+
+            element.classList.add("unsupported");
+
+        }
+
+    }
+
+
+    /* Check features */
+
+    const storageSupported =
+        checkLocalStorage();
+
+    const querySupported =
+        checkQuerySelector();
+
+    const gridSupported =
+        checkCSSGrid();
+
+
+    showStatus(
+        "storageStatus",
+        storageSupported
+    );
+
+    showStatus(
+        "queryStatus",
+        querySupported
+    );
+
+    showStatus(
+        "gridStatus",
+        gridSupported
+    );
+
+
+    /* =====================================
+       STORAGE TEST
+       ===================================== */
+
+    document
+        .getElementById("storageBtn")
+        .addEventListener("click", function() {
+
+            const message =
+                document.getElementById(
+                    "storageMessage"
+                );
+
+            if (storageSupported) {
+
+                localStorage.setItem(
+                    "student",
+                    "Swetha"
+                );
+
+                const value =
+                    localStorage.getItem("student");
+
+                message.style.display = "block";
+
+                message.textContent =
+                    "localStorage is supported. " +
+                    "Stored value: " + value;
+
+            } else {
+
+                /*
+                    FALLBACK
+                    If localStorage is unavailable,
+                    use a normal JavaScript variable.
+                */
+
+                let fallbackStudent = "Swetha";
+
+                message.style.display = "block";
+
+                message.textContent =
+                    "localStorage is not supported. " +
+                    "Fallback variable is being used: "
+                    + fallbackStudent;
+
+            }
+
+        });
+
+
+    /* =====================================
+       QUERYSELECTOR FALLBACK
+       ===================================== */
+
+    let selectedElement;
+
+
+    if (querySupported) {
+
+        selectedElement =
+            document.querySelector(".subtitle");
+
+    } else {
+
+        /*
+            Fallback:
+            getElementsByClassName()
+        */
+
+        selectedElement =
+            document.getElementsByClassName(
+                "subtitle"
+            )[0];
+
+    }
+
+
+    selectedElement.style.fontWeight = "bold";
+
+
+    /* =====================================
+       CSS FALLBACK MESSAGE
+       ===================================== */
+
+    if (!gridSupported) {
+
+        document.querySelector(".fallback")
+            .insertAdjacentHTML(
+                "beforeend",
+                "<p><strong>Fallback:</strong> " +
+                "CSS Grid is unavailable, so " +
+                "block layout is used.</p>"
+            );
+
+    }
+
+</script>
+
+</body>
+
+</html>
