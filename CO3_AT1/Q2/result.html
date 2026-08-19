@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Result Processing</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+            📊
+        </div>
+
+        <div>
+            <h1>Student Result Processing</h1>
+            <p>Server-Side Result Analysis</p>
+        </div>
+
+    </header>
+
+
+    <main class="main">
+
+        <!-- FORM -->
+
+        <section class="form-card">
+
+            <div class="section-title">
+
+                <span>01</span>
+
+                <div>
+                    <h2>Student Details</h2>
+                    <p>Enter student information and marks</p>
+                </div>
+
+            </div>
+
+
+            <form
+                action="StudentResultServlet"
+                method="post"
+            >
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter student name"
+                    >
+
+                </div>
+
+
+                <!-- REGISTER NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="regno">
+                        Register Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="regno"
+                        name="regno"
+                        placeholder="e.g. 23CSE001"
+                    >
+
+                </div>
+
+
+                <!-- MARKS -->
+
+                <div class="marks-title">
+                    Subject Marks
+                </div>
+
+
+                <div class="marks-grid">
+
+                    <div class="mark-box">
+
+                        <label for="mark1">
+                            Subject 1
+                        </label>
+
+                        <input
+                            type="text"
+                            id="mark1"
+                            name="mark1"
+                            placeholder="0 - 100"
+                        >
+
+                    </div>
+
+
+                    <div class="mark-box">
+
+                        <label for="mark2">
+                            Subject 2
+                        </label>
+
+                        <input
+                            type="text"
+                            id="mark2"
+                            name="mark2"
+                            placeholder="0 - 100"
+                        >
+
+                    </div>
+
+
+                    <div class="mark-box">
+
+                        <label for="mark3">
+                            Subject 3
+                        </label>
+
+                        <input
+                            type="text"
+                            id="mark3"
+                            name="mark3"
+                            placeholder="0 - 100"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit">
+
+                    Calculate Result →
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- INFORMATION -->
+
+        <section class="info-card">
+
+            <div class="info-icon">
+                🖥️
+            </div>
+
+            <h2>
+                Server-Side Processing
+            </h2>
+
+            <p>
+                Your details are submitted using the
+                <strong>POST</strong> method and processed
+                by a Java Servlet running on Apache Tomcat.
+            </p>
+
+
+            <div class="feature">
+
+                <span>✓</span>
+
+                <p>
+                    Missing value validation
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>✓</span>
+
+                <p>
+                    Marks range validation
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>✓</span>
+
+                <p>
+                    Total and average calculation
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>✓</span>
+
+                <p>
+                    Highest mark and pass/fail status
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        Servlet-Based Student Result Processing
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>
