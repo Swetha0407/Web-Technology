@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="UTF-8">
-
     <title>XPath Course Analysis</title>
 
     <style>
-
         body {
             font-family: Arial, sans-serif;
             margin: 30px;
-            background-color: #f5f5f5;
+            background: #f4f4f4;
         }
 
         h1 {
@@ -20,35 +16,28 @@
         }
 
         .result {
-            background-color: white;
+            background: white;
             padding: 20px;
-            margin-bottom: 20px;
+            margin: 15px 0;
             border-radius: 8px;
         }
 
-        h3 {
+        h2 {
             margin-bottom: 10px;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        .xpath {
+            background: #eeeeee;
+            padding: 10px;
+            font-family: monospace;
+            margin-bottom: 12px;
         }
 
-        th,
-        td {
-            border: 1px solid #999;
-            padding: 8px;
-            text-align: left;
+        .answer {
+            font-weight: bold;
+            line-height: 1.8;
         }
-
-        th {
-            background-color: #333;
-            color: white;
-        }
-
     </style>
-
 </head>
 
 <body>
@@ -59,12 +48,9 @@
 
 <script>
 
-/* XML Dataset */
+/* XML DATA */
 
 const xmlData = `
-
-<?xml version="1.0" encoding="UTF-8"?>
-
 <courses>
 
     <course id="C101">
@@ -113,170 +99,246 @@ const xmlData = `
     </course>
 
 </courses>
-
 `;
 
 
-/* Convert string into XML document */
+/* Convert XML string into XML document */
 
 const parser = new DOMParser();
 
 const xml = parser.parseFromString(
     xmlData,
-    "application/xml"
+    "text/xml"
 );
 
 
-/* Function to execute XPath */
+/* Check whether XML was parsed correctly */
 
-function executeXPath(expression) {
+if (xml.getElementsByTagName("parsererror").length > 0) {
 
-    const result = document.evaluate(
-
-        expression,
-
-        xml,
-
-        null,
-
-        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-
-        null
-
-    );
-
-    let output = "";
-
-    for (
-        let i = 0;
-        i < result.snapshotLength;
-        i++
-    ) {
-
-        const node =
-            result.snapshotItem(i);
-
-        output +=
-            node.textContent.trim() +
-            "<br>";
-
-    }
-
-    return output;
+    document.getElementById("output").innerHTML =
+        "<h2>Error: XML could not be parsed.</h2>";
 
 }
 
 
-/* Display all XPath results */
+/* XPath function */
+
+function getXPathResult(expression) {
+
+    const result = document.evaluate(
+        expression,
+        xml,
+        null,
+        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+        null
+    );
+
+    let output = "";
+
+    for (let i = 0; i < result.snapshotLength; i++) {
+
+        const node = result.snapshotItem(i);
+
+        /*
+         * If the selected node is a course,
+         * display its important information.
+         */
+
+        if (node.nodeName === "course") {
+
+            const id = node.getAttribute("id");
+            const code = node.getElementsByTagName("code")[0].textContent;
+            const name = node.getElementsByTagName("name")[0].textContent;
+            const faculty = node.getElementsByTagName("faculty")[0].textContent;
+            const students = node.getElementsByTagName("students")[0].textContent;
+            const credits = node.getElementsByTagName("credits")[0].textContent;
+            const type = node.getElementsByTagName("type")[0].textContent;
+
+            output +=
+                "ID: " + id +
+                " | Code: " + code +
+                " | Name: " + name +
+                " | Faculty: " + faculty +
+                " | Students: " + students +
+                " | Credits: " + credits +
+                " | Type: " + type +
+                "<br>";
+
+        }
+
+        else {
+
+            output += node.textContent.trim() + "<br>";
+
+        }
+
+    }
+
+    return output;
+}
+
+
+/* Display all XPath questions */
 
 document.getElementById("output").innerHTML = `
 
 <div class="result">
 
-<h3>a. All Course Records</h3>
+    <h2>a. All Course Records</h2>
 
-${executeXPath(
-    "/courses/course"
-)}
+    <div class="xpath">
+        /courses/course
+    </div>
 
-</div>
-
-
-<div class="result">
-
-<h3>b. Names of All Courses</h3>
-
-${executeXPath(
-    "/courses/course/name"
-)}
+    <div class="answer">
+        ${getXPathResult("/courses/course")}
+    </div>
 
 </div>
 
 
 <div class="result">
 
-<h3>c. Courses Having More Than 50 Students</h3>
+    <h2>b. Names of All Courses</h2>
 
-${executeXPath(
-    "/courses/course[students > 50]/name"
-)}
+    <div class="xpath">
+        /courses/course/name
+    </div>
 
-</div>
-
-
-<div class="result">
-
-<h3>d. Courses Carrying 4 Credits</h3>
-
-${executeXPath(
-    "/courses/course[credits = 4]/name"
-)}
+    <div class="answer">
+        ${getXPathResult("/courses/course/name")}
+    </div>
 
 </div>
 
 
 <div class="result">
 
-<h3>e. Courses Whose Type is Theory</h3>
+    <h2>c. Courses Having More Than 50 Students</h2>
 
-${executeXPath(
-    "/courses/course[type = 'Theory']/name"
-)}
+    <div class="xpath">
+        /courses/course[students &gt; 50]
+    </div>
 
-</div>
-
-
-<div class="result">
-
-<h3>f. Theory Courses Having More Than 50 Students</h3>
-
-${executeXPath(
-    "/courses/course[type = 'Theory' and students > 50]/name"
-)}
+    <div class="answer">
+        ${getXPathResult("/courses/course[students > 50]/name")}
+    </div>
 
 </div>
 
 
 <div class="result">
 
-<h3>g. Faculty Handling Courses with At Least 4 Credits</h3>
+    <h2>d. Courses Carrying 4 Credits</h2>
 
-${executeXPath(
-    "/courses/course[credits >= 4]/faculty"
-)}
+    <div class="xpath">
+        /courses/course[credits = 4]
+    </div>
 
-</div>
-
-
-<div class="result">
-
-<h3>h. Course Whose ID is C104</h3>
-
-${executeXPath(
-    "/courses/course[@id = 'C104']/name"
-)}
+    <div class="answer">
+        ${getXPathResult("/courses/course[credits = 4]/name")}
+    </div>
 
 </div>
 
 
 <div class="result">
 
-<h3>i. First Course</h3>
+    <h2>e. Courses Whose Type is Theory</h2>
 
-${executeXPath(
-    "/courses/course[1]/name"
-)}
+    <div class="xpath">
+        /courses/course[type = 'Theory']
+    </div>
+
+    <div class="answer">
+        ${getXPathResult("/courses/course[type = 'Theory']/name")}
+    </div>
 
 </div>
 
 
 <div class="result">
 
-<h3>j. Last Course</h3>
+    <h2>f. Theory Courses Having More Than 50 Students</h2>
 
-${executeXPath(
-    "/courses/course[last()]/name"
-)}
+    <div class="xpath">
+        /courses/course[type = 'Theory' and students &gt; 50]/name
+    </div>
+
+    <div class="answer">
+        ${getXPathResult(
+            "/courses/course[type = 'Theory' and students > 50]/name"
+        )}
+    </div>
+
+</div>
+
+
+<div class="result">
+
+    <h2>g. Faculty Handling Courses with At Least 4 Credits</h2>
+
+    <div class="xpath">
+        /courses/course[credits &gt;= 4]/faculty
+    </div>
+
+    <div class="answer">
+        ${getXPathResult(
+            "/courses/course[credits >= 4]/faculty"
+        )}
+    </div>
+
+</div>
+
+
+<div class="result">
+
+    <h2>h. Course Whose ID is C104</h2>
+
+    <div class="xpath">
+        /courses/course[@id = 'C104']/name
+    </div>
+
+    <div class="answer">
+        ${getXPathResult(
+            "/courses/course[@id = 'C104']/name"
+        )}
+    </div>
+
+</div>
+
+
+<div class="result">
+
+    <h2>i. First Course</h2>
+
+    <div class="xpath">
+        /courses/course[1]/name
+    </div>
+
+    <div class="answer">
+        ${getXPathResult(
+            "/courses/course[1]/name"
+        )}
+    </div>
+
+</div>
+
+
+<div class="result">
+
+    <h2>j. Last Course</h2>
+
+    <div class="xpath">
+        /courses/course[last()]/name
+    </div>
+
+    <div class="answer">
+        ${getXPathResult(
+            "/courses/course[last()]/name"
+        )}
+    </div>
 
 </div>
 
@@ -285,5 +347,4 @@ ${executeXPath(
 </script>
 
 </body>
-
 </html>
