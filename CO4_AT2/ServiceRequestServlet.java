@@ -1,6 +1,8 @@
 package com.elgoog;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -8,8 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-@SuppressWarnings("serial")
 @WebServlet("/ServiceRequestServlet")
 public class ServiceRequestServlet extends HttpServlet {
 
@@ -18,7 +20,7 @@ public class ServiceRequestServlet extends HttpServlet {
                            HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Read values submitted from the JSP form
+        // Read submitted form values
         String employeeId = request.getParameter("employeeId");
         String employeeName = request.getParameter("employeeName");
         String department = request.getParameter("department");
@@ -46,6 +48,32 @@ public class ServiceRequestServlet extends HttpServlet {
             return;
         }
 
+        // Get current session
+        HttpSession session = request.getSession();
+
+        // Get existing requests from session
+        List<ServiceRequest> serviceRequests =
+            (List<ServiceRequest>) session.getAttribute("serviceRequests");
+
+        if (serviceRequests == null) {
+            serviceRequests = new ArrayList<>();
+        }
+
+        // Allow maximum 5 requests
+        if (serviceRequests.size() >= 5) {
+
+            request.setAttribute(
+                "errorMessage",
+                "Maximum of 5 service requests can be added."
+            );
+
+            RequestDispatcher dispatcher =
+                request.getRequestDispatcher("serviceRequest.jsp");
+
+            dispatcher.forward(request, response);
+            return;
+        }
+
         // Create Model object
         ServiceRequest serviceRequest =
             new ServiceRequest(
@@ -57,29 +85,44 @@ public class ServiceRequestServlet extends HttpServlet {
                 priority
             );
 
-        // Generate service request number
-        String requestNumber = "SR-1001";
+        // Generate request number
+        int requestNumberValue = 1001 + serviceRequests.size();
 
-        // Store Model and request number as request attributes
-        request.setAttribute(
-            "serviceRequest",
-            serviceRequest
+        String requestNumber =
+            "SR-" + requestNumberValue;
+
+        // Add request to the list
+        serviceRequests.add(serviceRequest);
+
+        // Store list in session
+        session.setAttribute(
+            "serviceRequests",
+            serviceRequests
         );
 
+        // Store latest request number
         request.setAttribute(
             "requestNumber",
             requestNumber
         );
 
+        request.setAttribute(
+            "serviceRequest",
+            serviceRequest
+        );
+
         // Forward to acknowledgement page
         RequestDispatcher dispatcher =
-            request.getRequestDispatcher("acknowledgement.jsp");
+            request.getRequestDispatcher(
+                "acknowledgement.jsp"
+            );
 
         dispatcher.forward(request, response);
     }
 
-    // Method to check whether a field is empty
     private boolean isEmpty(String value) {
-        return value == null || value.trim().isEmpty();
+
+        return value == null ||
+               value.trim().isEmpty();
     }
 }

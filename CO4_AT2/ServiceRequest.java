@@ -9,7 +9,6 @@ public class ServiceRequest {
     private String problemDescription;
     private String priority;
 
-    // Constructor
     public ServiceRequest(String employeeId,
                           String employeeName,
                           String department,
@@ -25,7 +24,6 @@ public class ServiceRequest {
         this.priority = priority;
     }
 
-    // Getter and Setter for Employee ID
     public String getEmployeeId() {
         return employeeId;
     }
@@ -34,7 +32,6 @@ public class ServiceRequest {
         this.employeeId = employeeId;
     }
 
-    // Getter and Setter for Employee Name
     public String getEmployeeName() {
         return employeeName;
     }
@@ -43,7 +40,6 @@ public class ServiceRequest {
         this.employeeName = employeeName;
     }
 
-    // Getter and Setter for Department
     public String getDepartment() {
         return department;
     }
@@ -52,7 +48,6 @@ public class ServiceRequest {
         this.department = department;
     }
 
-    // Getter and Setter for Problem Category
     public String getProblemCategory() {
         return problemCategory;
     }
@@ -61,7 +56,6 @@ public class ServiceRequest {
         this.problemCategory = problemCategory;
     }
 
-    // Getter and Setter for Problem Description
     public String getProblemDescription() {
         return problemDescription;
     }
@@ -70,7 +64,6 @@ public class ServiceRequest {
         this.problemDescription = problemDescription;
     }
 
-    // Getter and Setter for Priority
     public String getPriority() {
         return priority;
     }
